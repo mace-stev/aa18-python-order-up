@@ -4,10 +4,10 @@ In this project, you will create a database-driven Web application that a
 mom-and-pop restaurant could start using to help them with their order system.
 In it, you will create the ability to
 
-* Have a menu
-* Have tables in the restaurant with identifiers
-* Associate an order with a table
-* Then, have a small workflow where, the ordering process
+- Have a menu
+- Have tables in the restaurant with identifiers
+- Associate an order with a table
+- Then, have a small workflow where, the ordering process
   1. The host marks a table as sat marking it as occupied
   2. A server enters an order for the table
   3. The cashier closes out the table marking it empty
@@ -18,27 +18,27 @@ management system can make its developers a comfortable amount of money.
 
 You'll perform the following steps in the project, each constituting a section.
 
-* Set up the environment
-* Create the login/logout workflow
-* Create the code to represent menus, menu items, and menu item types
-* Create the code to represent tables
-* Create the code to represent an order
-* Create the views to power the workflow described above
+- Set up the environment
+- Create the login/logout workflow
+- Create the code to represent menus, menu items, and menu item types
+- Create the code to represent tables
+- Create the code to represent an order
+- Create the views to power the workflow described above
 
 ## Getting started: dependencies and database
 
 In this project, you're going to need the following dependencies.
 
-* **Flask**: you know, the thing that makes the Web application run!
-* **python-dotenv**: to enable loading of configuration from `.env` and
+- **Flask**: you know, the thing that makes the Web application run!
+- **python-dotenv**: to enable loading of configuration from `.env` and
   `.flaskenv` files
-* **SQLAlchemy**: so that you don't have to write SQL, anymore
-* **Flask-SQLAlchemy**: so that SQLAlchemy and Flask work together like cousins
+- **SQLAlchemy**: so that you don't have to write SQL, anymore
+- **Flask-SQLAlchemy**: so that SQLAlchemy and Flask work together like cousins
   on good terms
-* **WTForms**:  to make and validate forms
-* **Flask-WTF**: to make WTForms and Flask work together like office mates that
+- **WTForms**: to make and validate forms
+- **Flask-WTF**: to make WTForms and Flask work together like office mates that
   don't hate each other
-* **Flask-Login**: so you don't have to write the login stuff yourself
+- **Flask-Login**: so you don't have to write the login stuff yourself
 
 Don't worry about that last one, Flask-Login. This project will walk you through
 every step of implementing it with clear instructions and code so you don't have
@@ -344,10 +344,10 @@ from .models import db, Employee
 
 At the end of the file. They perform the following steps.
 
-* Create the login manager for your application to protect routes.
-* Instruct the login manager to use the "session.login" Blueprint function (not
+- Create the login manager for your application to protect routes.
+- Instruct the login manager to use the "session.login" Blueprint function (not
   created, yet).
-* Configure the `LoginManager` to use your `load_user` function to get
+- Configure the `LoginManager` to use your `load_user` function to get
   `Employee` objects from the database.
 
 ```python
@@ -394,9 +394,9 @@ In `base.html`, put this Jinja.
 <html>
   <head>
     {% if title %}
-      <title>{{ title }} - Order Up!</title>
+    <title>{{ title }} - Order Up!</title>
     {% else %}
-      <title>Welcome to Order Up!</title>
+    <title>Welcome to Order Up!</title>
     {% endif %}
   </head>
   <body>
@@ -411,31 +411,27 @@ _injected_ into the template in `base.html` where it also reads
 `block content`.
 
 ```html
-{% extends "base.html" %}
-
-{% block content %}
+{% extends "base.html" %} {% block content %}
 <form method="post" action="{{ url_for('.login') }}">
   {{ form.csrf_token }}
   <div>
-    {{ form.employee_number.label }} {{ form.employee_number }}
-
-    {% if form.employee_number.errors %}
-      <ul>
-        {% for error in form.employee_number.errors %}
-          <li>{{ error }}</li>
-        {% endfor %}
-      </ul>
+    {{ form.employee_number.label }} {{ form.employee_number }} {% if
+    form.employee_number.errors %}
+    <ul>
+      {% for error in form.employee_number.errors %}
+      <li>{{ error }}</li>
+      {% endfor %}
+    </ul>
     {% endif %}
   </div>
   <div>
-    {{ form.password.label }} {{ form.password }}
-
-    {% if form.employee_number.errors %}
-      <ul>
-        {% for error in form.employee_number.errors %}
-          <li>{{ error }}</li>
-        {% endfor %}
-      </ul>
+    {{ form.password.label }} {{ form.password }} {% if
+    form.employee_number.errors %}
+    <ul>
+      {% for error in form.employee_number.errors %}
+      <li>{{ error }}</li>
+      {% endfor %}
+    </ul>
     {% endif %}
   </div>
   <div>{{ form.submit }}</div>
@@ -728,12 +724,12 @@ In this solution, the `Order` ties together an `Employee` (the server), a
 `Table` (where the customers sit), and one-to-many `MenuItem` objects. The
 design went like this:
 
-* An order has one employee and one table to it. That means there's a model for
+- An order has one employee and one table to it. That means there's a model for
   this, call it `Order`. What needs to be known for an order?
-  * The employee
-  * The table
-  * Some kind of status that shows that it's open or closed
-* An order has multiple menu items associated with it. That's another model,
+  - The employee
+  - The table
+  - Some kind of status that shows that it's open or closed
+- An order has multiple menu items associated with it. That's another model,
   call it `OrderDetail`. Each order detail will have a menu item associated with
   it. Then, each order detail will point to an order.
 
@@ -779,8 +775,8 @@ modeling stuff is done, for now.
 Now it's time to _get_ data from the database and put data back _into_ the
 database. That will be awesome. A couple of things before you dive in:
 
-* Don't forget about the `/static` route provided by Flask.
-* Don't be afraid to try new things.
+- Don't forget about the `/static` route provided by Flask.
+- Don't be afraid to try new things.
 
 You have a choice, here. Get things working, or shoot for the moon.
 
@@ -788,9 +784,9 @@ You have a choice, here. Get things working, or shoot for the moon.
 
 Come up with the simplest possible Web page that you can to:
 
-* Assign employees to tables
-* Close tables
-* Add food items to an order
+- Assign employees to tables
+- Close tables
+- Add food items to an order
 
 When you get done with those three _simple_ forms, try out this next _shoot for
 the moon_ goal, or go to the end of the project and try out the _Menu
@@ -806,13 +802,13 @@ application.
 In this design, the `index` method in the `app.routes.orders` module would serve
 this page. It would require three endpoints to handle the form submissions.
 
-* **Assign Table**: This endpoint would take the id of a table and the id of an
+- **Assign Table**: This endpoint would take the id of a table and the id of an
   employee (provided by the dropdowns at the top of the page) and create a new
   order with those values. It would then redirect back to `index`.
-* **Close Table**: This endpoint would take an order id, get the `Order` object
+- **Close Table**: This endpoint would take an order id, get the `Order` object
   from the database based on the primary key, mark the `finished` attribute to
   `True`, save it, and redirect back to `index`.
-* **Add to Order**: This endpoint would take an order id and multiple menu item
+- **Add to Order**: This endpoint would take an order id and multiple menu item
   ids and create `OrderDetail` objects for each one and save them to the
   database.
 
@@ -924,9 +920,7 @@ Then, generate the URL that you want the form to go to and set the `formaction`
 attribute to that. Example code would look like this.
 
 ```html
-<button form="food-list" formaction="/orders/3/items">
-  Add to order
-</button>
+<button form="food-list" formaction="/orders/3/items">Add to order</button>
 ```
 
 That button will submit the form with the id `food-list` and send it to the
@@ -957,7 +951,6 @@ form.menu_item_ids.choices = [(item.id, '')
 
 Now that you have order management out of the way, create a page that allows you
 to add or remove new menu items.
-
 
 [1]: https://flask-login.readthedocs.io/en/latest/
 [2]: https://docs.sqlalchemy.org/en/13/core/metadata.html#sqlalchemy.schema.Column
